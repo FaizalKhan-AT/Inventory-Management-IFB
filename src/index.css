@@ -1,0 +1,49 @@
+.navbar {
+  height: 10vh;
+  z-index: 12;
+  background: #fff;
+}
+
+.shadow {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+.pointer {
+  cursor: pointer;
+}
+.material-symbols-outlined {
+  user-select: none;
+}
+.sidebar {
+  top: 10vh;
+  width: 300px;
+  z-index: 11;
+}
+.side-link:hover {
+  background: rgba(138, 137, 137, 0.6);
+}
+.btn-rounded {
+  border-radius: 25px;
+}
+.form-control,
+.form-select,
+.form-check-input,
+.btn,
+.btn-close {
+  box-shadow: none !important;
+}
+.card {
+  transition: all 0.3s ease-in-out;
+}
+.card.part:hover {
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+}
+.dev-link {
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 18px;
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+.dev-link:hover {
+  text-decoration: dotted underline;
+}

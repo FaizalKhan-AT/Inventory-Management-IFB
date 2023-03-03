@@ -1,0 +1,11 @@
+.modal-share {
+  display: none;
+}
+.modal-share.active {
+  display: block;
+}
+@media screen and (max-width: 900px) {
+  .modal-size {
+    width: 80% !important;
+  }
+}
