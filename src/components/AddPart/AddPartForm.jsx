@@ -81,7 +81,7 @@ const AddPartForm = ({ edit }) => {
             name="stock"
             value={formData.stock}
             maxLength={200}
-            type="text"
+            type="number"
             required
             className="form-control"
           />

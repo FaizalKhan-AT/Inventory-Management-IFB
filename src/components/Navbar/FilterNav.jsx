@@ -7,6 +7,7 @@ const FilterNav = ({
   handleSearch,
   handleFilter,
   setFilter,
+  tech,
 }) => {
   const categories = ["All", "Spares", "Addictives", "Accessories"];
   const navigate = useNavigate();
@@ -14,36 +15,44 @@ const FilterNav = ({
   const handleSelectChange = (e) => setFilter(e.target.value);
   return (
     <>
-      <nav className="d-flex my-3 align-items-center flex-wrap justify-content-between container gap-3">
-        <div className="d-flex align-items-center gap-3">
-          <select
-            onChange={handleSelectChange}
-            className="form-select"
-            name="category"
-          >
-            {categories.map((item, idx) => {
-              return (
-                <option key={idx + item} value={item}>
-                  {item}
-                </option>
-              );
-            })}
-          </select>
-          <div
-            onClick={handleFilter}
-            className="btn btn-dark btn-rounded d-flex align-items-center justify-content-center"
-          >
-            <span className="material-symbols-outlined">filter_alt</span>
-            <span>Filter</span>
+      <nav
+        className={`d-flex my-3 align-items-center flex-wrap justify-content-${
+          !tech ? "between" : "end"
+        } container gap-3`}
+      >
+        {!tech ? (
+          <div className="d-flex align-items-center gap-3">
+            <select
+              onChange={handleSelectChange}
+              className="form-select"
+              name="category"
+            >
+              {categories.map((item, idx) => {
+                return (
+                  <option key={idx + item} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
+            <div
+              onClick={handleFilter}
+              className="btn btn-dark btn-rounded d-flex align-items-center justify-content-center"
+            >
+              <span className="material-symbols-outlined">filter_alt</span>
+              <span>Filter</span>
+            </div>
           </div>
-        </div>
-        <div className="d-flex gap-3 align-items-center">
+        ) : (
+          ""
+        )}
+        <div className="d-flex gap-3 flex-wrap align-items-center">
           <div
-            onClick={() => navigate("/add-part")}
+            onClick={() => navigate(tech ? "/add-technician" : "/add-part")}
             className="btn btn-danger flex-wrap justify-content-center btn-rounded d-flex align-items-center"
           >
-            <span className="material-symbols-outlined search">add</span>
-            Add Part
+            <span className="material-symbols-outlined">add</span>
+            Add {tech ? "Technician" : "Part"}
           </div>
           <div className="d-flex align-items-center gap-2">
             <input
@@ -57,7 +66,7 @@ const FilterNav = ({
               onClick={handleSearch}
               className="btn btn-rounded btn-dark d-flex align-items-center justify-content-center"
             >
-              <span className="material-symbols-outlined search">search</span>
+              <span className="material-symbols-outlined">search</span>
             </span>
           </div>
         </div>
