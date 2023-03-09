@@ -3,7 +3,7 @@ import React from "react";
 const Error = ({ error, setError }) => {
   return (
     <div
-      style={{ zIndex: "20", width: "fit-content" }}
+      style={{ zIndex: "22", width: "fit-content" }}
       className="alert alert-danger  mt-2 position-fixed end-0 bottom-0 me-3 mb-4"
       role="alert"
     >

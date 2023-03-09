@@ -100,7 +100,7 @@ const Home = () => {
         </div>
       ) : (
         <div className="h2 text-center my-5">
-          No parts are added till now...
+          No parts were added till now...
         </div>
       )}
       <br />
