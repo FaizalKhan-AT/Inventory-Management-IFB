@@ -2,7 +2,31 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/ifb-logo.png";
 import Sidebar from "../Sidebar/Sidebar";
-const Navbar = () => {
+const Navbar = ({ tech }) => {
+  const links = [
+    {
+      to: "/admin/stocks",
+      name: "Stocks",
+      icon: "inventory_2",
+    },
+    {
+      to: "/admin/technicians",
+      name: "Technicians",
+      icon: "tools_wrench",
+    },
+  ];
+  const tlinks = [
+    {
+      to: "/technician",
+      name: "Your Stocks",
+      icon: "inventory_2",
+    },
+    {
+      to: "/technician/inventory",
+      name: "Inventory",
+      icon: "tools_wrench",
+    },
+  ];
   const [navOpen, setNavOpen] = useState(false);
   const handleNavOpen = () => setNavOpen(!navOpen);
   return (
@@ -24,7 +48,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      {navOpen ? <Sidebar /> : ""}
+      {navOpen ? <Sidebar links={tech ? tlinks : links} /> : ""}
     </>
   );
 };

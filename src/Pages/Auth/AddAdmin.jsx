@@ -1,14 +1,15 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Signup from "../components/Auth/Signup";
-import Error from "../components/Error/Error";
-import { db } from "../Firebase/config";
-const AddTechnician = () => {
+import Signup from "../../components/Auth/Signup";
+import Error from "../../components/Error/Error";
+import { db } from "../../Firebase/config";
+
+const AddAdmin = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const ref = collection(db, "technicians");
+  const ref = collection(db, "admins");
   const validate = (data) => {
     setLoading(true);
     const qu = query(ref, where("email", "==", data.email));
@@ -23,14 +24,11 @@ const AddTechnician = () => {
       }
     });
   };
-
-  const handleSubmit = (data) => validate(data);
-
-  const uploadToFireStore = async (data) => {
-    addDoc(collection(db, "technicians"), data)
+  const uploadToFireStore = (data) => {
+    addDoc(collection(db, "admins"), data)
       .then(() => {
         setLoading(false);
-        navigate("/admin/technicians");
+        navigate("/admin");
       })
       .catch((err) => setError(err.message));
   };
@@ -41,14 +39,10 @@ const AddTechnician = () => {
         style={{ height: "100vh" }}
         className="w-100 d-flex align-items-center justify-content-center"
       >
-        <Signup
-          loading={loading}
-          name="Add New Technician"
-          handleSubmit={handleSubmit}
-        />
+        <Signup loading={loading} name="Add Admin" handleSubmit={validate} />
       </div>
     </>
   );
 };
 
-export default AddTechnician;
+export default AddAdmin;

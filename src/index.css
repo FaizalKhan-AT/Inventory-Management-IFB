@@ -1,5 +1,5 @@
 .navbar {
-  height: 10vh;
+  height: 12vh;
   z-index: 21;
   background: #fff;
 }
@@ -14,7 +14,7 @@
   user-select: none;
 }
 .sidebar {
-  top: 10vh;
+  top: 12vh;
   width: 300px;
   z-index: 11;
 }
@@ -57,4 +57,11 @@ tr,
 td,
 th {
   border: 1px solid black;
+}
+th {
+  background: #767171;
+  color:#fff;
+}
+td,th {
+  padding: 5px;
 }

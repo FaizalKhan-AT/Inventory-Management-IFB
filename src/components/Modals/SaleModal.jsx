@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import Error from "../Error/Error";
+import { useEffect, useState } from "react";
 
-const RevokeModal = ({ open, handleOpen, data, revokeFn, id, loading }) => {
+const SaleModal = ({ open, handleOpen, data, saleFn, loading, users }) => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState("");
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   return (
     <>
-      {error ? <Error error={error} setError={setError} /> : ""}
-
       <div
         style={{ zIndex: "20" }}
         className={`position-absolute modal-share ${open ? "active" : ""}`}
@@ -30,7 +28,7 @@ const RevokeModal = ({ open, handleOpen, data, revokeFn, id, loading }) => {
                 <span className="material-symbols-outlined text-dark">
                   inventory
                 </span>
-                Revoke Stocks
+                Mark Sale
               </div>
               <span
                 onClick={handleOpen}
@@ -42,41 +40,37 @@ const RevokeModal = ({ open, handleOpen, data, revokeFn, id, loading }) => {
           </div>
           <div className="my-3 mx-1">
             <div className="d-flex align-items-center flex-column">
-              {data && data.length > 0 ? (
-                <select
-                  name="stockId"
-                  className="form-select"
-                  onChange={handleChange}
-                >
-                  <option selected disabled>
-                    --Select a stock--
-                  </option>
-                  {data.map((op, idx) => {
-                    return (
-                      <option value={op.docid} key={op.docid}>
-                        {op.partName}
-                      </option>
-                    );
-                  })}
-                </select>
-              ) : (
-                ""
-              )}
+              <select
+                name="technician"
+                className="form-select"
+                onChange={handleChange}
+              >
+                <option selected disabled>
+                  --Select a technician--
+                </option>
+                {users.map((op, idx) => {
+                  return (
+                    <option value={op.docid} key={op.docid}>
+                      {op.username}
+                    </option>
+                  );
+                })}
+              </select>
               <div className="my-3 w-100">
-                <label className="form-label">How many to revoke</label>
+                <label className="form-label">How many sold</label>
                 <input
                   onChange={handleChange}
-                  name="stockReduce"
-                  value={formData.stockReduce}
+                  name="stockSold"
+                  value={formData.stockSold}
                   maxLength={200}
-                  min="0"
                   type="number"
+                  min="0"
                   className="form-control"
                 />
               </div>
               <button
-                disabled={formData.stockId ? false : true}
-                onClick={() => revokeFn({ tid: id, ...formData })}
+                disabled={formData.stockSold ? false : true}
+                onClick={() => saleFn({ tid: data.technician, ...formData })}
                 className="btn btn-outline-primary btn-rounded"
               >
                 {loading ? (
@@ -86,7 +80,7 @@ const RevokeModal = ({ open, handleOpen, data, revokeFn, id, loading }) => {
                     aria-hidden="true"
                   ></span>
                 ) : (
-                  <>Revoke</>
+                  <>Mark as sold</>
                 )}
               </button>
             </div>
@@ -97,4 +91,4 @@ const RevokeModal = ({ open, handleOpen, data, revokeFn, id, loading }) => {
   );
 };
 
-export default RevokeModal;
+export default SaleModal;

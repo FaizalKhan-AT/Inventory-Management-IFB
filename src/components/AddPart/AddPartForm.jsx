@@ -24,6 +24,10 @@ const AddPartForm = ({ edit }) => {
       setError("Please select a category...");
       return false;
     }
+    if (formData.stock < 0) {
+      setError("stock cannot be negative");
+      return false;
+    }
     return true;
   };
   const handleSubmit = (e) => {
@@ -40,7 +44,7 @@ const AddPartForm = ({ edit }) => {
     updateDoc(upRef, data)
       .then(() => {
         setLoading(false);
-        navigate("/");
+        navigate("/admin/stocks");
       })
       .catch((err) => setError(err.message));
   };
@@ -48,7 +52,7 @@ const AddPartForm = ({ edit }) => {
     addDoc(collection(db, "parts"), data)
       .then(() => {
         setLoading(false);
-        navigate("/");
+        navigate("/admin/stocks");
       })
       .catch((err) => setError(err.message));
   };

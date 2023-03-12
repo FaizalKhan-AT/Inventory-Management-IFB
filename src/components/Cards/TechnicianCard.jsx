@@ -35,7 +35,13 @@ const TechnicianCard = ({ technician, fetchData }) => {
       setError("stock revoke is higher than stock assigned");
       return;
     }
-    const s = technician.stocks.map((item) => {
+    if (+data.stockReduce < 0) {
+      setLoading(false);
+      setError("stock revoke cannot be negative");
+      return;
+    }
+    setError("");
+    const d = technician.stocks.map((item) => {
       if (item.docid === data.stockId) {
         return {
           ...item,
@@ -43,6 +49,7 @@ const TechnicianCard = ({ technician, fetchData }) => {
         };
       } else return item;
     });
+    const s = d.filter((item) => item.stockAmount > 0);
 
     const up = { stocks: [...s] };
     updateDoc(docRef, up)
@@ -78,7 +85,7 @@ const TechnicianCard = ({ technician, fetchData }) => {
       />
       {error ? <Error setError={setError} error={error} /> : ""}
 
-      <div className="cursor">
+      <div className="pointer">
         <div onClick={() => setExpand(!expand)} className="card py-2 px-3">
           <div className="d-flex align-items-center justify-content-between">
             <div className="d-flex align-items-center gap-2">

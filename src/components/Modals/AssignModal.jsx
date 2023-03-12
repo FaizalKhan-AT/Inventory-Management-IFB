@@ -79,11 +79,13 @@ const AssignModal = ({ open, handleOpen, assignFn, data, loading }) => {
                 value={formData.stockAmount}
                 maxLength={200}
                 type="number"
+                min="0"
                 placeholder={data.stock + " stocks available"}
                 className="form-control"
               />
             </div>
             <button
+              disabled={formData.technician ? false : true}
               onClick={() => assignFn(data, formData)}
               className="btn btn-outline-primary btn-rounded"
             >

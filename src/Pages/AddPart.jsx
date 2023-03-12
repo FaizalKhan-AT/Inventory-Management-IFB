@@ -9,7 +9,7 @@ const AddPart = () => {
     <>
       <div className="container">
         <div
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/admin/stocks")}
           className="position-fixed top-0 start-0 mt-3 ms-3 d-flex align-items-center justify-content-center btn btn-rounded btn-dark"
         >
           <span className="material-symbols-outlined">arrow_back_ios</span>
