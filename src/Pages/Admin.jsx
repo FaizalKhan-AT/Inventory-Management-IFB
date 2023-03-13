@@ -51,10 +51,16 @@ const Admin = () => {
   }, []);
   return (
     <>
-      <Navbar />
-      <br />
+      <Navbar admin />
       <br />
       {error ? <Error setError={setError} error={error} /> : ""}
+      <div
+        style={{ textDecoration: "dotted underline red" }}
+        className="text-center h2 fw-bold my-3 mt-5"
+      >
+        All Admins
+      </div>
+      <br />
       <AdminNav
         search={search}
         setSearch={setSearch}

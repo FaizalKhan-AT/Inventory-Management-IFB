@@ -23,15 +23,26 @@ const AuthContext = ({ children }) => {
       }
     }
   };
-
+  const handleLogout = (u) => {
+    switch (u) {
+      case "user":
+        localStorage.removeItem("user");
+        navigate("/technician/login");
+        break;
+      case "sadmin":
+        localStorage.removeItem("sadmin");
+        navigate("/super-admin/login");
+        break;
+      case "admin":
+        localStorage.removeItem("admin");
+        navigate("/admin/login");
+        break;
+    }
+  };
   useEffect(() => {
     checkAuth();
   }, []);
-  return (
-    <Auth.Provider value={{ technician, setTechnician }}>
-      {children}
-    </Auth.Provider>
-  );
+  return <Auth.Provider value={{ handleLogout }}>{children}</Auth.Provider>;
 };
 
 export default AuthContext;

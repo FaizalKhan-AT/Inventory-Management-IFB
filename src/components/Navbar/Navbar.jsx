@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/ifb-logo.png";
 import Sidebar from "../Sidebar/Sidebar";
-const Navbar = ({ tech }) => {
+const Navbar = ({ admin, tech }) => {
   const links = [
     {
       to: "/admin/stocks",
@@ -32,7 +32,7 @@ const Navbar = ({ tech }) => {
   return (
     <>
       <nav className="navbar shadow sticky-top navbar-lg">
-        <div className="d-flex align-items-center justify-content-around w-100">
+        <div className="d-flex align-items-center justify-content-center w-100">
           <div className="mx-3">
             <span
               onClick={handleNavOpen}
@@ -41,14 +41,21 @@ const Navbar = ({ tech }) => {
               {navOpen ? "close" : "menu"}
             </span>
           </div>
-          <div className="container-fluid w-100 d-flex align-items-center justify-content-center">
-            <Link className="navbar-brand" to="/">
+          <div className="container-fluid  w-100 d-flex align-items-center justify-content-center">
+            <Link className="navbar-brand " to="/">
               <img width={100} src={Logo} alt="ifb-logo" />
             </Link>
           </div>
         </div>
       </nav>
-      {navOpen ? <Sidebar links={tech ? tlinks : links} /> : ""}
+      {navOpen ? (
+        <Sidebar
+          links={admin ? "" : tech ? tlinks : links}
+          type={admin ? "sadmin" : tech ? "user" : "admin"}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
