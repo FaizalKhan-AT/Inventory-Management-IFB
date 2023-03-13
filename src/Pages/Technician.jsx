@@ -65,7 +65,10 @@ const Technician = () => {
       </div>
       <br />
       <br />
-      <div className="px-5 row w-100 justify-content-center gap-3">
+      <div
+        style={{ overflowX: "auto" }}
+        className="px-5 row w-100 justify-content-center gap-3"
+      >
         {loading ? (
           <Spinner />
         ) : stocks.length > 0 ? (

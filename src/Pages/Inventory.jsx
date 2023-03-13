@@ -64,7 +64,10 @@ const Inventory = () => {
       </div>
       <br />
       <br />
-      <div className="container w-100 justify-content-center gap-3">
+      <div
+        style={{ overflowX: "auto" }}
+        className="container w-100 justify-content-center gap-3"
+      >
         {loading ? (
           <Spinner />
         ) : stocks.length > 0 ? (

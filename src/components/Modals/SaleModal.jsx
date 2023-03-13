@@ -41,7 +41,7 @@ const SaleModal = ({ open, handleOpen, data, saleFn, loading, users }) => {
           <div className="my-3 mx-1">
             <div className="d-flex align-items-center flex-column">
               <select
-                name="technician"
+                name="tid"
                 className="form-select"
                 onChange={handleChange}
               >
@@ -70,7 +70,7 @@ const SaleModal = ({ open, handleOpen, data, saleFn, loading, users }) => {
               </div>
               <button
                 disabled={formData.stockSold ? false : true}
-                onClick={() => saleFn({ tid: data.technician, ...formData })}
+                onClick={() => saleFn(formData)}
                 className="btn btn-outline-primary btn-rounded"
               >
                 {loading ? (

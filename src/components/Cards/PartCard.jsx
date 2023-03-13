@@ -24,6 +24,7 @@ const PartCard = ({ data, fetchData }) => {
   const [error, setError] = useState("");
   const [saleOpen, setSaleOpen] = useState(false);
   const [users, setUsers] = useState([]);
+  const [temp, setTemp] = useState([]);
   const techRef = collection(db, "technicians");
   const handleOpen = () => setOpen(!open);
   const handleDelete = (id) => {
@@ -45,7 +46,10 @@ const PartCard = ({ data, fetchData }) => {
   const handleSale = (d) => {
     setLoading(true);
     const docRef = doc(db, "technicians", d.tid);
-    if (+data.stockAmount < +d.stockSold) {
+    let [user] = temp.filter((t) => t.docid === d.tid);
+    let [stock] = user.stocks.filter((s) => data.docid === s.docid);
+
+    if (+stock.stockAmount < +d.stockSold) {
       setLoading(false);
       setError("stock Sold is higher than stock assigned");
       return;
@@ -57,7 +61,7 @@ const PartCard = ({ data, fetchData }) => {
     }
     setError("");
 
-    const f = stocks.map((item) => {
+    const f = user.stocks.map((item) => {
       if (item.docid === data.docid) {
         let ts = +d.stockSold + (item.sale ? +item.sale : 0);
         let sa = +item.stockAmount - +d.stockSold;
@@ -69,7 +73,6 @@ const PartCard = ({ data, fetchData }) => {
       } else return item;
     });
     const up = { stocks: [...f] };
-    console.log(f);
     updateDoc(docRef, up)
       .then(() => {
         setLoading(false);
@@ -126,17 +129,30 @@ const PartCard = ({ data, fetchData }) => {
       .catch((err) => setError(err.message));
   };
   const fetchUsers = (docid) => {
-    console.log(docid);
     getDocs(techRef)
       .then((snap) => {
-        const ids = snap.docs.map((item) => {
-          item.data().stocks.map((s) => {
+        const ids = [];
+        setTemp(
+          snap.docs.map((doc) => {
+            return { ...doc.data(), docid: doc.id };
+          })
+        );
+        snap.docs.map((item) => {
+          let id = [];
+          item.data().stocks.forEach((s) => {
             if (s.docid === docid) {
+              id.push(s.technician);
             }
           });
+          ids.push(...id);
         });
-        console.log(ids);
-        // setUsers(u.map((data) => data.data()));
+        const fil = [];
+        ids.forEach((id) => {
+          snap.docs.forEach((doc) => {
+            if (doc.id === id) fil.push({ ...doc.data(), docid: doc.id });
+          });
+        });
+        setUsers(fil);
       })
       .catch((err) => console.error(err.message));
   };
