@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import AddPart from "./Pages/AddPart";
 import AddTechnician from "./Pages/AddTechnician";
 import Admin from "./Pages/Admin";
@@ -29,12 +29,21 @@ function App() {
         </Route>
         <Route path="/super-admin">
           <Route index element={<Admin />} />
-          <Route path="add-admin" element={<AddAdmin />} />
           <Route path="login" element={<SuperLogin />} />
+          <Route path="add-admin" element={<AddAdmin />} />
         </Route>
         <Route path="/add-technician" element={<AddTechnician />} />
         <Route path="/add-part" element={<AddPart />} />
         <Route path="/edit-part" element={<EditPart />} />
+        <Route
+          path="*"
+          element={
+            <h2 className="text-center mt-5">
+              404 Page not found. Requested page Doesn't Exist{" "}
+              <Link to="/">Home</Link>
+            </h2>
+          }
+        ></Route>
       </Routes>
     </>
   );

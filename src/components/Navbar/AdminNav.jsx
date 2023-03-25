@@ -12,7 +12,7 @@ const AdminNav = ({ search, setSearch, handleSearch, tech }) => {
           ""
         ) : (
           <div
-            onClick={() => navigate("/admin/add-admin")}
+            onClick={() => navigate("/super-admin/add-admin")}
             className="btn btn-danger flex-wrap justify-content-center btn-rounded d-flex align-items-center"
           >
             <span className="material-symbols-outlined">add</span>

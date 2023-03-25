@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import TechnicianCard from "../components/Cards/TechnicianCard";
 import Error from "../components/Error/Error";
@@ -48,7 +48,28 @@ const Technicians = () => {
     setLoading(true);
     fetchData();
   }, []);
-
+  const handleClearSales = () => {
+    const up = [];
+    searchData.forEach((item) => {
+      if (item.stocks && item.stocks.length > 0) {
+        let st = [];
+        item.stocks.forEach((s) => {
+          if (s.sale && s.sale > 0) {
+            s.sale = 0;
+            st.push(s);
+          }
+        });
+        if (st.length > 0) {
+          const docRef = doc(db, "technicians", item.docid);
+          updateDoc(docRef, { stocks: [...st] }).catch((err) =>
+            setError("Something went wrong")
+          );
+        } else setError("Sales are already zero");
+      }
+    });
+    setError("Sales cleared");
+    fetchData();
+  };
   return (
     <>
       <Navbar />
@@ -62,6 +83,7 @@ const Technicians = () => {
       </div>
       <br />
       <FilterNav
+        handleClearSales={handleClearSales}
         tech
         handleSearch={handleSearch}
         search={search}

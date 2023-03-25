@@ -46,6 +46,20 @@ const TechnicianCard = ({ technician, fetchData }) => {
         return {
           ...item,
           stockAmount: +item.stockAmount - +data.stockReduce,
+          returns: item.returns
+            ? [
+                ...item.returns,
+                {
+                  number: +data.stockReduce,
+                  date: new Date().toLocaleDateString("en-gb"),
+                },
+              ]
+            : [
+                {
+                  number: +data.stockReduce,
+                  date: new Date().toLocaleDateString("en-gb"),
+                },
+              ],
         };
       } else return item;
     });
@@ -118,24 +132,66 @@ const TechnicianCard = ({ technician, fetchData }) => {
                   <span className="fw-bold fs-5 card-ex-det">
                     Stocks Assigned :{" "}
                   </span>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Part Name</th>
-                        <th>Stocks</th>
-                        <th>Sale</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {technician.stocks.map((item, idx) => (
-                        <tr key={item.docid}>
-                          <td>{item.partName}</td>
-                          <td>{item.stockAmount}</td>
-                          <td>{item.sale ? item.sale : 0}</td>
+                  <div style={{ overflowX: "auto" }}>
+                    <table className="w-100">
+                      <thead>
+                        <tr>
+                          <th>Part Name</th>
+                          <th>Stocks</th>
+                          <th>Sale</th>
+                          <th>Returns (number, date)</th>
+                          <th>Sales (number, date)</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {technician.stocks.map((item, idx) => (
+                          <tr key={item.docid}>
+                            <td>{item.partName}</td>
+                            <td>{item.stockAmount}</td>
+                            <td>{item.sale ? item.sale : 0}</td>
+                            <td style={{ overflowY: "auto" }}>
+                              <div
+                                style={{
+                                  height: "35px",
+                                }}
+                              >
+                                {item.returns && item.returns.length > 0
+                                  ? item.returns.map((r, i) => (
+                                      <div
+                                        key={r.date + i}
+                                        className="py-2 d-flex gap-1"
+                                      >
+                                        <span>{r.number},</span>
+                                        <span>{r.date}</span>
+                                      </div>
+                                    ))
+                                  : "N / A"}
+                              </div>
+                            </td>
+                            <td style={{ overflowY: "auto" }}>
+                              <div
+                                style={{
+                                  height: "35px",
+                                }}
+                              >
+                                {item.sales && item.sales.length > 0
+                                  ? item.sales.map((r, i) => (
+                                      <div
+                                        key={r.date + i}
+                                        className="py-2 d-flex gap-1"
+                                      >
+                                        <span>{r.number},</span>
+                                        <span>{r.date}</span>
+                                      </div>
+                                    ))
+                                  : "N / A"}
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </span>
               ) : (
                 ""
@@ -169,7 +225,7 @@ const TechnicianCard = ({ technician, fetchData }) => {
                   onClick={handleRevokeOpen}
                   className="btn btn-outline-secondary btn-rounded"
                 >
-                  Revoke Stocks
+                  Return Stocks
                 </div>
               ) : (
                 ""

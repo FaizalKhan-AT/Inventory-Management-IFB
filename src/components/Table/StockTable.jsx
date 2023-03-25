@@ -10,6 +10,8 @@ const StockTable = ({ inventory, stocks }) => {
           <th>Stocks</th>
           <th>Sale</th>
           <th>Category</th>
+          <th>Returns</th>
+          <th>Sales</th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +26,38 @@ const StockTable = ({ inventory, stocks }) => {
             <td>{inventory ? item.stock : item.stockAmount}</td>
             <td>{item.sale ? item.sale : 0}</td>
             <td>{item.category}</td>
+            <td style={{ overflowY: "auto" }}>
+              <div
+                style={{
+                  height: "35px",
+                }}
+              >
+                {item.returns && item.returns.length > 0
+                  ? item.returns.map((r, i) => (
+                      <div key={r.date + i} className="py-2 d-flex gap-1">
+                        <span>{r.number},</span>
+                        <span>{r.date}</span>
+                      </div>
+                    ))
+                  : "N / A"}
+              </div>
+            </td>
+            <td style={{ overflowY: "auto" }}>
+              <div
+                style={{
+                  height: "35px",
+                }}
+              >
+                {item.sales && item.sales.length > 0
+                  ? item.sales.map((r, i) => (
+                      <div key={r.date + i} className="py-2 d-flex gap-1">
+                        <span>{r.number},</span>
+                        <span>{r.date}</span>
+                      </div>
+                    ))
+                  : "N / A"}
+              </div>
+            </td>
           </tr>
         ))}
       </tbody>

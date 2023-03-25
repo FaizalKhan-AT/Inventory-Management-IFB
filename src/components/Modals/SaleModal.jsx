@@ -48,13 +48,19 @@ const SaleModal = ({ open, handleOpen, data, saleFn, loading, users }) => {
                 <option selected disabled>
                   --Select a technician--
                 </option>
-                {users.map((op, idx) => {
-                  return (
-                    <option value={op.docid} key={op.docid}>
-                      {op.username}
-                    </option>
-                  );
-                })}
+                {users.length > 0 ? (
+                  users.map((op, idx) => {
+                    return (
+                      <option value={op.docid} key={op.docid}>
+                        {op.username}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option disabled>
+                    {loading ? "Loading..." : "No techincians"}
+                  </option>
+                )}
               </select>
               <div className="my-3 w-100">
                 <label className="form-label">How many sold</label>

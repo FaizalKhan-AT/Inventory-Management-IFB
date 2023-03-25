@@ -69,6 +69,20 @@ const PartCard = ({ data, fetchData }) => {
           ...item,
           sale: ts,
           stockAmount: sa,
+          sales: item.sales
+            ? [
+                ...item.sales,
+                {
+                  number: +d.stockSold,
+                  date: new Date().toLocaleDateString("en-gb"),
+                },
+              ]
+            : [
+                {
+                  number: +d.stockSold,
+                  date: new Date().toLocaleDateString("en-gb"),
+                },
+              ],
         };
       } else return item;
     });
@@ -129,32 +143,44 @@ const PartCard = ({ data, fetchData }) => {
       .catch((err) => setError(err.message));
   };
   const fetchUsers = (docid) => {
+    setLoading(true);
     getDocs(techRef)
       .then((snap) => {
-        const ids = [];
+        let ids = [];
         setTemp(
           snap.docs.map((doc) => {
             return { ...doc.data(), docid: doc.id };
           })
         );
-        snap.docs.map((item) => {
+        temp.map((item) => {
           let id = [];
-          item.data().stocks.forEach((s) => {
-            if (s.docid === docid) {
-              id.push(s.technician);
-            }
-          });
-          ids.push(...id);
+          if (item.stocks && item.stocks.length > 0) {
+            item.stocks.forEach((s) => {
+              if (s.docid === docid) {
+                id.push(s.technician);
+              }
+            });
+            ids.push(...id);
+          } else {
+            setLoading(false);
+            return;
+          }
         });
         const fil = [];
-        ids.forEach((id) => {
-          snap.docs.forEach((doc) => {
-            if (doc.id === id) fil.push({ ...doc.data(), docid: doc.id });
+        if (ids && ids.length > 0) {
+          ids.forEach((id) => {
+            snap.docs.forEach((doc) => {
+              if (doc.id === id) fil.push({ ...doc.data(), docid: doc.id });
+            });
           });
-        });
-        setUsers(fil);
+          setUsers(fil);
+          setLoading(false);
+        }
       })
-      .catch((err) => console.error(err.message));
+      .catch((err) => {
+        setLoading(false);
+        console.error(err.message);
+      });
   };
 
   return (

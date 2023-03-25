@@ -28,7 +28,7 @@ const AddAdmin = () => {
     addDoc(collection(db, "admins"), data)
       .then(() => {
         setLoading(false);
-        navigate("/admin");
+        navigate("/super-admin");
       })
       .catch((err) => setError(err.message));
   };

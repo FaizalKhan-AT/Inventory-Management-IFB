@@ -8,6 +8,7 @@ const FilterNav = ({
   handleFilter,
   setFilter,
   tech,
+  handleClearSales,
 }) => {
   const categories = ["All", "Spares", "Addictives", "Accessories"];
   const navigate = useNavigate();
@@ -47,6 +48,17 @@ const FilterNav = ({
           ""
         )}
         <div className="d-flex gap-3 flex-wrap align-items-center">
+          {tech ? (
+            <div
+              onClick={handleClearSales}
+              className="btn btn-success flex-wrap justify-content-center btn-rounded d-flex align-items-center"
+            >
+              <span className="material-symbols-outlined">clear</span>
+              Clear sales
+            </div>
+          ) : (
+            ""
+          )}
           <div
             onClick={() => navigate(tech ? "/add-technician" : "/add-part")}
             className="btn btn-danger flex-wrap justify-content-center btn-rounded d-flex align-items-center"
@@ -54,6 +66,7 @@ const FilterNav = ({
             <span className="material-symbols-outlined">add</span>
             Add {tech ? "Technician" : "Part"}
           </div>
+
           <div className="d-flex align-items-center gap-2">
             <input
               type="search"
