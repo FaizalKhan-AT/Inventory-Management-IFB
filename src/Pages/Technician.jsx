@@ -67,12 +67,14 @@ const Technician = () => {
       <br />
       <div
         style={{ overflowX: "auto" }}
-        className="px-5 row w-100 justify-content-center gap-3"
+        className="px-3 row w-100 justify-content-center gap-3"
       >
         {loading ? (
           <Spinner />
         ) : stocks.length > 0 ? (
-          <StockTable stocks={stocks} />
+          <div className="container">
+            <StockTable stocks={stocks} />
+          </div>
         ) : (
           <div className="h2 text-center my-5">
             You don't have any stocks till now...
