@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const SaleModal = ({ open, handleOpen, data, saleFn, loading, users }) => {
+const SaleModal = ({ open, handleOpen, saleFn, loading, id, users }) => {
   const [formData, setFormData] = useState({});
 
   const handleChange = (e) => {

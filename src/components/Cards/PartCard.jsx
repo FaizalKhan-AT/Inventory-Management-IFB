@@ -4,7 +4,9 @@ import {
   doc,
   getDoc,
   getDocs,
+  query,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -144,6 +146,7 @@ const PartCard = ({ data, fetchData }) => {
   };
   const fetchUsers = (docid) => {
     setLoading(true);
+
     getDocs(techRef)
       .then((snap) => {
         let ids = [];
@@ -152,21 +155,29 @@ const PartCard = ({ data, fetchData }) => {
             return { ...doc.data(), docid: doc.id };
           })
         );
-        temp.map((item) => {
-          let id = [];
+        let u = snap.docs.map((doc) => {
+          return { ...doc.data(), docid: doc.id };
+        });
+
+        u.map((item) => {
+          const id = [];
           if (item.stocks && item.stocks.length > 0) {
             item.stocks.forEach((s) => {
               if (s.docid === docid) {
                 id.push(s.technician);
               }
             });
-            ids.push(...id);
+            if (id.length > 0) ids.push(...id);
           } else {
             setLoading(false);
             return;
           }
         });
         const fil = [];
+        if (ids.length < 1) {
+          setLoading(false);
+          return;
+        }
         if (ids && ids.length > 0) {
           ids.forEach((id) => {
             snap.docs.forEach((doc) => {
@@ -201,10 +212,10 @@ const PartCard = ({ data, fetchData }) => {
         assignFn={handleAssign}
       />
       <SaleModal
+        id={data.docid}
         handleOpen={handleSaleOpen}
         loading={loading}
         open={saleOpen}
-        data={data}
         users={users}
         saleFn={handleSale}
       />
