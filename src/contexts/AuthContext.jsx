@@ -30,7 +30,7 @@ const AuthContext = ({ children }) => {
     });
   };
   const checkAuth = () => {
-    if (window.location.href.includes("/technician")) {
+    if (window.location.href.includes("/technician/")) {
       if (!localStorage.getItem("user")) {
         navigate("/technician/login");
       } else {
