@@ -8,7 +8,7 @@ import Spinner from "../components/Spinner/Spinner";
 import StockTable from "../components/Table/StockTable";
 import { db } from "../Firebase/config";
 
-const Inventory = () => {
+const TableView = () => {
   const [error, setError] = useState("");
   const [stocks, setStocks] = useState([]);
   const [searchData, setSearchData] = useState([]);
@@ -49,7 +49,7 @@ const Inventory = () => {
   }, []);
   return (
     <>
-      <Navbar tech />
+      <Navbar />
       {error ? <Error setError={setError} error={error} /> : ""}
       <br />
       <br />
@@ -63,7 +63,7 @@ const Inventory = () => {
         style={{ textDecoration: "dotted underline red" }}
         className="text-center h2 fw-bold my-3 mt-5"
       >
-        Inventory {stocks.length > 0 ? `(${stocks.length})` : ""}
+        Inventory Table View {stocks.length > 0 ? `(${stocks.length})` : ""}
       </div>
       <br />
       <br />
@@ -89,4 +89,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default TableView;

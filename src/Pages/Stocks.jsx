@@ -37,10 +37,13 @@ const Stocks = () => {
     if (searchData.length < 1) fetchData();
     setParts(
       searchData.filter((item) => {
-        if (item.partName.includes(search.toLocaleLowerCase())) return item;
+        if (
+          item.partName.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+        )
+          return item;
         else if (
           item.category === "spares" &&
-          item.partCode.includes(search.toLocaleLowerCase())
+          item.partCode.toLocaleLowerCase().includes(search.toLocaleLowerCase())
         )
           return item;
       })
@@ -76,7 +79,7 @@ const Stocks = () => {
         style={{ textDecoration: "dotted underline red" }}
         className="text-center h2 fw-bold my-3 mt-5"
       >
-        Stocks
+        Stocks {parts.length > 0 ? `(${parts.length})` : ""}
       </div>
       <br />
       <FilterNav

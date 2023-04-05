@@ -63,8 +63,10 @@ const TechnicianCard = ({ technician, fetchData }) => {
         };
       } else return item;
     });
-    const s = d.filter((item) => item.stockAmount > 0);
-
+    const s = d.filter((item) => {
+      if (item.sale > 0) return item;
+      else if (item.stockAmount > 0) return item;
+    });
     const up = { stocks: [...s] };
     updateDoc(docRef, up)
       .then(() => {

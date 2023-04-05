@@ -12,6 +12,7 @@ import Inventory from "./Pages/Inventory";
 import Stocks from "./Pages/Stocks";
 import Technician from "./Pages/Technician";
 import Technicians from "./Pages/Technicians";
+import TableView from "./Pages/TableView";
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
           <Route path="stocks" element={<Stocks />} />
           <Route path="technicians" element={<Technicians />} />
           <Route path="login" element={<AdminLogin />} />
+          <Route path="table-view" element={<TableView />} />
         </Route>
         <Route path="/technician">
           <Route index element={<Technician />} />

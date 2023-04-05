@@ -14,6 +14,11 @@ const Navbar = ({ admin, tech }) => {
       name: "Technicians",
       icon: "tools_wrench",
     },
+    {
+      to: "/admin/table-view",
+      name: "Table View",
+      icon: "table_chart",
+    },
   ];
   const tlinks = [
     {

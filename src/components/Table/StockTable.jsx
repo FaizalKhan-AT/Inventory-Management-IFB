@@ -15,59 +15,63 @@ const StockTable = ({ inventory, stocks }) => {
         </tr>
       </thead>
       <tbody>
-        {stocks.map((item, idx) => (
-          <tr key={item.docid + idx}>
-            <td>{item.partName}</td>
-            {item.category === "spares" ? (
-              <td>{item.partCode}</td>
-            ) : (
-              <td>N/A</td>
-            )}
-            <td>{inventory ? item.stock : item.stockAmount}</td>
-            <td>{item.sale ? item.sale : 0}</td>
-            <td>{item.category}</td>
-            {inventory ? (
-              ""
-            ) : (
-              <td style={{ overflowY: "auto" }}>
-                <div
-                  style={{
-                    height: "35px",
-                  }}
-                >
-                  {item.returns && item.returns.length > 0
-                    ? item.returns.map((r, i) => (
-                        <div key={r.date + i} className="py-2 d-flex gap-1">
-                          <span>{r.number},</span>
-                          <span>{r.date}</span>
-                        </div>
-                      ))
-                    : "N / A"}
-                </div>
-              </td>
-            )}
-            {inventory ? (
-              ""
-            ) : (
-              <td style={{ overflowY: "auto" }}>
-                <div
-                  style={{
-                    height: "35px",
-                  }}
-                >
-                  {item.sales && item.sales.length > 0
-                    ? item.sales.map((r, i) => (
-                        <div key={r.date + i} className="py-2 d-flex gap-1">
-                          <span>{r.number},</span>
-                          <span>{r.date}</span>
-                        </div>
-                      ))
-                    : "N / A"}
-                </div>
-              </td>
-            )}
-          </tr>
-        ))}
+        {stocks.map((item, idx) => {
+          if (+item.stockAmount > 0 || inventory) {
+            return (
+              <tr key={item.docid + idx + item.partName}>
+                <td>{item.partName}</td>
+                {item.category === "spares" ? (
+                  <td>{item.partCode}</td>
+                ) : (
+                  <td>N/A</td>
+                )}
+                <td>{inventory ? item.stock : item.stockAmount}</td>
+                <td>{item.sale ? item.sale : 0}</td>
+                <td>{item.category}</td>
+                {inventory ? (
+                  ""
+                ) : (
+                  <td style={{ overflowY: "auto" }}>
+                    <div
+                      style={{
+                        height: "35px",
+                      }}
+                    >
+                      {item.returns && item.returns.length > 0
+                        ? item.returns.map((r, i) => (
+                            <div key={r.date + i} className="py-2 d-flex gap-1">
+                              <span>{r.number},</span>
+                              <span>{r.date}</span>
+                            </div>
+                          ))
+                        : "N / A"}
+                    </div>
+                  </td>
+                )}
+                {inventory ? (
+                  ""
+                ) : (
+                  <td style={{ overflowY: "auto" }}>
+                    <div
+                      style={{
+                        height: "35px",
+                      }}
+                    >
+                      {item.sales && item.sales.length > 0
+                        ? item.sales.map((r, i) => (
+                            <div key={r.date + i} className="py-2 d-flex gap-1">
+                              <span>{r.number},</span>
+                              <span>{r.date}</span>
+                            </div>
+                          ))
+                        : "N / A"}
+                    </div>
+                  </td>
+                )}
+              </tr>
+            );
+          }
+        })}
       </tbody>
     </table>
   );

@@ -79,7 +79,7 @@ const Technicians = () => {
         style={{ textDecoration: "dotted underline red" }}
         className="text-center h2 fw-bold my-3 mt-5"
       >
-        Technicians
+        Technicians {technicians.length > 0 ? `(${technicians.length})` : ""}
       </div>
       <br />
       <FilterNav
