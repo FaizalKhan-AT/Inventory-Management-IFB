@@ -94,7 +94,7 @@ const Technicians = () => {
       <div className="container d-flex flex-column gap-2">
         {loading ? (
           <Spinner />
-        ) : technicians.length > 0 ? (
+        ) : technicians && technicians.length > 0 ? (
           technicians.map((item, idx) => {
             return (
               <TechnicianCard

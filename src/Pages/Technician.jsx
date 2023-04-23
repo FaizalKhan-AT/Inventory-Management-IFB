@@ -71,7 +71,7 @@ const Technician = () => {
       >
         {loading ? (
           <Spinner />
-        ) : stocks.length > 0 ? (
+        ) : stocks && stocks.length > 0 ? (
           <div className="container">
             <StockTable stocks={stocks} />
           </div>

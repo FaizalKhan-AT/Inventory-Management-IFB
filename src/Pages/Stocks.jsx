@@ -93,7 +93,7 @@ const Stocks = () => {
       <br />
       {loading ? (
         <Spinner />
-      ) : parts.length > 0 ? (
+      ) : parts && parts.length > 0 ? (
         <div className="px-5 row w-100 justify-content-center gap-3">
           {parts.map((item) => {
             return (

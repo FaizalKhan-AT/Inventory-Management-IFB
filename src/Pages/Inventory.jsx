@@ -73,7 +73,7 @@ const Inventory = () => {
       >
         {loading ? (
           <Spinner />
-        ) : stocks.length > 0 ? (
+        ) : stocks && stocks.length > 0 ? (
           <StockTable inventory stocks={stocks} />
         ) : (
           <div className="h2 text-center my-5">
