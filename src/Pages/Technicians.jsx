@@ -42,7 +42,10 @@ const Technicians = () => {
         );
         setLoading(false);
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   };
   useEffect(() => {
     setLoading(true);

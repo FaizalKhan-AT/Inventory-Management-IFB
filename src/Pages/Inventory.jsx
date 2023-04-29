@@ -24,7 +24,10 @@ const Inventory = () => {
         setSearchData(snap.docs.map((doc) => doc.data()));
         setLoading(false);
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   };
   const handleSearch = () => {
     setLoading(true);

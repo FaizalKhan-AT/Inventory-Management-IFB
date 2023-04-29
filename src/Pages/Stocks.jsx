@@ -30,7 +30,10 @@ const Stocks = () => {
         );
         setLoading(false);
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   };
   const handleSearch = () => {
     setLoading(true);

@@ -32,7 +32,10 @@ const AddTechnician = () => {
         setLoading(false);
         navigate("/admin/technicians");
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
   };
   return (
     <>
