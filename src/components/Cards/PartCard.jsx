@@ -102,7 +102,11 @@ const PartCard = ({ data, fetchData }) => {
     setLoading(true);
     const upRef = doc(db, "parts", data.docid);
     const userRef = doc(db, "technicians", form.technician);
-    const d = { ...data, stock: +data.stock - +form.stockAmount };
+    const d = {
+      ...data,
+      stock: +data.stock - +form.stockAmount,
+    };
+
     if (+form.stockAmount < 0) {
       setLoading(false);
       setError("stock assign cannot be negative");
@@ -124,16 +128,75 @@ const PartCard = ({ data, fetchData }) => {
               s = {
                 stocks: [
                   ...r,
-                  { ...f, stockAmount: +f.stockAmount + +form.stockAmount },
+                  {
+                    ...f,
+                    stockAmount: +f.stockAmount + +form.stockAmount,
+                    assignments: data.assignments
+                      ? [
+                          ...data.assignments,
+                          {
+                            number: +form.stockAmount,
+                            date: new Date().toLocaleDateString("en-gb"),
+                          },
+                        ]
+                      : [
+                          {
+                            number: +form.stockAmount,
+                            date: new Date().toLocaleDateString("en-gb"),
+                          },
+                        ],
+                  },
                 ],
               };
             } else {
               s = {
-                stocks: [...snap.data().stocks, { ...data, ...form }],
+                stocks: [
+                  ...snap.data().stocks,
+                  {
+                    ...data,
+                    ...form,
+                    assignments: data.assignments
+                      ? [
+                          ...data.assignments,
+                          {
+                            number: +form.stockAmount,
+                            date: new Date().toLocaleDateString("en-gb"),
+                          },
+                        ]
+                      : [
+                          {
+                            number: +form.stockAmount,
+                            date: new Date().toLocaleDateString("en-gb"),
+                          },
+                        ],
+                  },
+                ],
               };
             }
-          } else s = { stocks: [{ ...data, ...form }] };
-
+          } else
+            s = {
+              stocks: [
+                {
+                  ...data,
+                  ...form,
+                  assignments: data.assignments
+                    ? [
+                        ...data.assignments,
+                        {
+                          number: +form.stockAmount,
+                          date: new Date().toLocaleDateString("en-gb"),
+                        },
+                      ]
+                    : [
+                        {
+                          number: +form.stockAmount,
+                          date: new Date().toLocaleDateString("en-gb"),
+                        },
+                      ],
+                },
+              ],
+            };
+          console.log(s);
           updateDoc(userRef, s).then(() => {
             setLoading(false);
             handleAssignOpen();

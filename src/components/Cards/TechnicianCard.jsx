@@ -143,6 +143,7 @@ const TechnicianCard = ({ technician, fetchData }) => {
                           <th>Sale</th>
                           <th>Returns (number, date)</th>
                           <th>Sales (number, date)</th>
+                          <th>Assigns (number, date)</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -178,6 +179,25 @@ const TechnicianCard = ({ technician, fetchData }) => {
                               >
                                 {item.sales && item.sales.length > 0
                                   ? item.sales.map((r, i) => (
+                                      <div
+                                        key={r.date + i}
+                                        className="py-2 d-flex gap-1"
+                                      >
+                                        <span>{r.number},</span>
+                                        <span>{r.date}</span>
+                                      </div>
+                                    ))
+                                  : "N / A"}
+                              </div>
+                            </td>
+                            <td style={{ overflowY: "auto" }}>
+                              <div
+                                style={{
+                                  height: "35px",
+                                }}
+                              >
+                                {item.assignments && item.assignments.length > 0
+                                  ? item.assignments.map((r, i) => (
                                       <div
                                         key={r.date + i}
                                         className="py-2 d-flex gap-1"
